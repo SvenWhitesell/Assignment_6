@@ -1,0 +1,156 @@
+#include "stdio.h"
+#include "iostream"
+
+using namespace std;
+class Transaction
+{
+public:
+	int uid;
+	int amount;
+	
+
+	Transaction()
+	{
+		uid = 0;
+		amount = 0;
+	}
+	virtual void Report()
+	{
+		printf("uid=%d amount=%d\n", uid, amount);
+	}
+};
+
+class WithDraw : public Transaction
+{
+public:
+
+	WithDraw()
+	{
+		printf("enter amount to withdraw: ");
+		scanf_s("%d", &amount);
+		
+		}
+	void Report()
+	{
+		printf("user %d has withdrawm the amount of %", uid, amount);
+	}
+};
+
+class Deposit : public Transaction
+{
+public:
+
+	Deposit()
+	{
+		
+		printf("enter amount to Deposit: ");
+		scanf_s("%d", &amount);
+	}
+	void Report()
+	{
+		printf("user %d has withdrawm the amount of %", uid, amount);
+	}
+};
+class PrintReport : public Transaction
+{
+public:
+
+	PrintReport()
+	{
+		printf("Transaction History: ");
+	
+	}
+	void pReport()
+	{
+		printf("user %d has withdrawm the amount of %", uid, amount);
+	}
+};
+
+
+
+class User
+{
+public:
+	int id;
+	int numTrans;
+	Transaction* tr[100];
+
+	User()
+	{
+		id = 0;
+		numTrans = 0;
+	}
+	void AddWithWithdraw()
+	{
+		tr[numTrans] = new WithDraw();
+		tr[numTrans]->uid = id;
+		numTrans++;
+	}
+	void AddDeposit()
+	{
+		tr[numTrans] = new Deposit();
+		tr[numTrans]->uid = id;
+		numTrans++;
+	}
+	void Report()
+	{
+		for (int i = 0; i < numTrans; i++)
+		{
+			tr[i]->Report();
+		}
+	}
+	
+};
+
+
+void main() 
+{
+	User users[100];
+		int u;
+		printf("enter user id: ");
+		scanf_s("%d", &u);
+	while (true)
+	{
+		//show menu
+		
+
+		int t;
+		//printf("enter task: ");
+		cout << "What would you like to do?\n" << "1. Withdrawal\n" << "2. Deposit\n" << "3. Get Report\n" << "4. Exit\n";
+		scanf_s("%d", &t);
+		
+	
+		//Withdrawal option
+		if (t == 1) 
+		{
+			users[u].tr[0] = new WithDraw();
+		}
+		//Deposit Option
+		if (t == 2) { 
+			users[u].tr[0] = new Deposit();
+		}
+		//Print report function
+		if (t == 3) 
+		{
+			for (int i = 0; i < users[u].numTrans; i++)
+			{
+				users[u].tr[i]->Report();
+			}
+		}
+		//Exit application
+		if (t == 4) { 
+			break;
+		}
+
+
+		if (t >= 5) { //If vaild command isnt pressed
+			cout << "You need to enter in a valid command!\n";
+		}
+		if (t <= 0) { //If vaild command isnt pressed
+			cout << "You need to enter in a valid command!\n";
+		}
+
+		//process command
+
+	}
+}
